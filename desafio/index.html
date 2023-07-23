@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilo.css">
+    <title>Formulario</title>
+</head>
+<body>
+    <div class = "form-container">
+      <h2>Formulário de Cadastro</h2>
+      <form id="registration-form" action="#" method="post">
+        <div class="form-group">
+          <label for="name">Nome:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Senha:</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+          <label for="confirm-password">Confirmar Senha:</label>
+          <input type="password" id="confirm-password" name="confirm-password" required>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Cadastrar">
+        </div>
+      </form>
+    </div>
+  
+    <script>
+      const form = document.getElementById('registration-form');
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        if (validateForm()) {
+          form.submit();
+            }
+        }
+        );
+  
+      function validateForm() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        let isValid = true;
+  
+        if (name.trim() === '') {
+          displayErrorMessage('name', 'Por favor, preencha o nome.');
+          isValid = false;
+        } else {
+          removeErrorMessage('name');
+        }
+  
+        if (email.trim() === '') {
+          displayErrorMessage('email', 'Por favor, preencha o email.');
+          isValid = false;
+        } else {
+          removeErrorMessage('email');
+        }
+  
+        if (password.trim() === '') {
+          displayErrorMessage('password', 'Por favor, preencha a senha.');
+          isValid = false;
+        } else {
+          removeErrorMessage('password');
+        }
+  
+        if (confirmPassword.trim() === '') {
+          displayErrorMessage('confirm-password', 'Por favor, confirme a senha.');
+          isValid = false;
+        } else if (password !== confirmPassword) {
+          displayErrorMessage('confirm-password', 'As senhas não coincidem.');
+          isValid = false;
+        } else {
+          removeErrorMessage('confirm-password');
+        }
+  
+        return isValid;
+      }
+  
+      function displayErrorMessage(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        const errorMessage = document.createElement('span');
+        errorMessage.className = 'error-message';
+        errorMessage.textContent = message;
+        field.parentNode.appendChild(errorMessage);
+      }
+  
+      function removeErrorMessage(fieldId) {
+        const field = document.getElementById(fieldId);
+        const errorMessage = field.parentNode.querySelector('.error-message');
+        if (errorMessage) {
+          errorMessage.remove();
+        }
+      }
+    </script>
+  </body>
+</html>
